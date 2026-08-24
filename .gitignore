@@ -28,7 +28,6 @@ Thumbs.db
 # ML generated files
 *.h5
 *.keras
-*.pkl
 *.joblib
 
 # Logs
