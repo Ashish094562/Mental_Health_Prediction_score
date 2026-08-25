@@ -26,7 +26,7 @@ MindScore AI is a full-stack machine learning project that demonstrates the comp
 - Frontend integration
 - Cloud deployment
 
-The project predicts `Mental_Health_Score` as a continuous numerical value, so this is a **regression problem**.
+The project predicts `Mental_Health_Score` as a continuous numerical value, making it a **regression problem**.
 
 The model uses information such as:
 
@@ -62,37 +62,120 @@ The model uses information such as:
 
 ---
 
-## 🏗️ How It Works
+## 🏗️ Application Architecture
+
+The application follows a full-stack machine learning architecture where the frontend collects user information, the FastAPI backend validates the request, and the trained ML pipeline generates the prediction.
 
 ```text
-User enters information
-        ↓
-HTML/CSS/JavaScript frontend
-        ↓
-POST /predict
-        ↓
-FastAPI validates the input
-        ↓
-Input converted to DataFrame
-        ↓
-Saved ML Pipeline preprocesses data
-        ↓
-Random Forest Regressor
-        ↓
-Predicted Mental Health Score
-        ↓
-FastAPI returns JSON
-        ↓
-Frontend displays the prediction
+                         ┌──────────────────┐
+                         │      User        │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │   HTML / CSS /   │
+                         │   JavaScript     │
+                         │    Frontend      │
+                         └────────┬─────────┘
+                                  │
+                           POST /predict
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │     FastAPI      │
+                         │     Backend      │
+                         └────────┬─────────┘
+                                  │
+                         Pydantic Validation
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │ ML Preprocessing │
+                         │     Pipeline     │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │  Random Forest   │
+                         │    Regressor     │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │  Mental Health   │
+                         │      Score       │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │   JSON Response  │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │ Frontend Displays│
+                         │    Prediction    │
+                         └──────────────────┘
 ```
 
-The complete preprocessing pipeline and trained model are saved together in:
+### 🔄 Prediction Flow
+
+```text
+User Input
+    ↓
+Frontend Form
+    ↓
+POST /predict
+    ↓
+FastAPI
+    ↓
+Pydantic Validation
+    ↓
+Convert Input to DataFrame
+    ↓
+Saved ML Pipeline
+    ↓
+Data Preprocessing
+    ↓
+Random Forest Regressor
+    ↓
+Predicted Mental Health Score
+    ↓
+JSON Response
+    ↓
+Frontend Result
+```
+
+The complete preprocessing pipeline and trained model are stored together in:
 
 ```text
 Mental_Health_Model.pkl
 ```
 
-This allows the API to receive raw user data and apply the same preprocessing used during training before generating the prediction.
+This allows the API to receive raw user data and apply the same preprocessing used during training before generating a prediction.
+
+---
+
+## 📁 Project Structure
+
+```text
+ml-fastapi-project/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   └── Mental_Health_Model.pkl
+│
+├── frontend/
+│   ├── index.html
+│   ├── scripts.js
+│   └── style.css
+│
+├── requirements.txt
+└── README.md
+```
+
+> **Note:** Make sure the JavaScript filename referenced by `index.html` matches the actual filename in the `frontend` folder.
 
 ---
 
@@ -108,13 +191,17 @@ Student Social Media And Mental Health Impact.csv
 
 The dataset contains approximately **5,000 student records**.
 
-Target variable:
+### Target Variable
 
 ```text
 Mental_Health_Score
 ```
 
-### Data Processing
+Since the target is a continuous numerical value, the project is treated as a **regression problem**.
+
+---
+
+## 🧹 Data Processing
 
 The project performs:
 
@@ -128,9 +215,13 @@ The project performs:
 - Categorical encoding
 - Feature scaling
 
-### Feature Engineering
+---
 
-The country feature is grouped into the **10 most frequent countries**, while all remaining countries are grouped as:
+## ⚙️ Feature Engineering
+
+The `Country` feature is grouped into the **10 most frequent countries**.
+
+All remaining countries are grouped into:
 
 ```text
 Other
@@ -142,19 +233,23 @@ The resulting feature is:
 Grouped_country
 ```
 
-### Encoding
+This reduces the number of categorical values and helps prevent excessive one-hot encoded features.
 
-**Ordinal Encoding**
+---
 
-`Stress_Level` is encoded according to:
+## 🔤 Encoding
+
+### Ordinal Encoding
+
+`Stress_Level` is encoded according to the following order:
 
 ```text
 Low → Medium → High → Very High
 ```
 
-**One-Hot Encoding**
+### One-Hot Encoding
 
-Used for:
+One-hot encoding is used for:
 
 ```text
 Gender
@@ -164,14 +259,18 @@ Purpose_Of_Use
 Grouped_country
 ```
 
-### Preprocessing Pipeline
+---
 
-`ColumnTransformer` is used to apply different preprocessing steps to different features.
+## ⚙️ Preprocessing Pipeline
+
+A `ColumnTransformer` is used to apply different preprocessing operations to different feature groups.
 
 For `Study_Hours`:
 
 ```text
-Log Transformation → StandardScaler
+Log Transformation
+        ↓
+StandardScaler
 ```
 
 Other numerical features use:
@@ -180,7 +279,23 @@ Other numerical features use:
 StandardScaler
 ```
 
-The complete preprocessing and model are stored in one scikit-learn pipeline.
+The complete preprocessing and model are stored together in a single scikit-learn pipeline.
+
+```text
+Raw Input
+    ↓
+Feature Engineering
+    ↓
+ColumnTransformer
+    ├── Numerical Features → StandardScaler
+    ├── Study Hours → Log Transform → StandardScaler
+    ├── Stress Level → Ordinal Encoding
+    └── Categorical Features → One-Hot Encoding
+    ↓
+Random Forest Regressor
+    ↓
+Prediction
+```
 
 ---
 
@@ -230,7 +345,7 @@ Results:
 | MAE | 0.3689 |
 | RMSE | 0.4869 |
 
-The **default Random Forest achieved the highest testing R² (0.8776)**, so the default Random Forest pipeline was selected as the final model.
+The **default Random Forest achieved the highest testing R² of 0.8776**, so the default Random Forest pipeline was selected as the final model.
 
 ---
 
@@ -244,19 +359,17 @@ The backend is built using **FastAPI**.
 GET /
 ```
 
-### Prediction
+### Prediction Endpoint
 
 ```http
 POST /predict
 ```
 
-Live API:
+**Live API:**
 
-```text
 https://mental-health-prediction-score-0r42.onrender.com/predict
-```
 
-### Example Request
+### 📥 Example Request
 
 ```json
 {
@@ -275,36 +388,13 @@ https://mental-health-prediction-score-0r42.onrender.com/predict
 }
 ```
 
-### Example Response
+### 📤 Example Response
 
 ```json
 {
   "predicted_mental_health_score": 7.42
 }
 ```
-
----
-
-## 📁 Project Structure
-
-```text
-ml-fastapi-project/
-│
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   └── Mental_Health_Model.pkl
-│
-├── frontend/
-│   ├── index.html
-│   ├── scripts.js
-│   └── style.css
-│
-├── requirements.txt
-└── README.md
-```
-
-> Make sure the JavaScript filename referenced by `index.html` matches the actual filename in the `frontend` folder.
 
 ---
 
@@ -344,7 +434,13 @@ The FastAPI backend is deployed using **Render**.
 https://mental-health-prediction-score-0r42.onrender.com
 ```
 
-The frontend communicates with the backend through the `/predict` API endpoint.
+The frontend communicates with the backend through the:
+
+```text
+POST /predict
+```
+
+endpoint.
 
 ---
 
@@ -353,8 +449,8 @@ The frontend communicates with the backend through the `/predict` API endpoint.
 ### 1. Clone the Repository
 
 ```bash
-git clone Ashish094562/Mental_Health_score
-cd ml-fastapi-project
+git clone https://github.com/Ashish094562/Mental_Health_score.git
+cd Mental_Health_score
 ```
 
 ### 2. Create a Virtual Environment
@@ -413,43 +509,6 @@ For local testing, make sure the frontend API URL points to:
 
 ```javascript
 const API_URL = "http://127.0.0.1:8000";
-```
-
----
-
-## 🔄 Application Architecture
-
-```text
-                 ┌──────────────────┐
-                 │      User        │
-                 └────────┬─────────┘
-                          ↓
-                 ┌──────────────────┐
-                 │ HTML / CSS / JS  │
-                 │    Frontend      │
-                 └────────┬─────────┘
-                          ↓
-                    POST /predict
-                          ↓
-                 ┌──────────────────┐
-                 │     FastAPI      │
-                 │     Backend      │
-                 └────────┬─────────┘
-                          ↓
-                 ┌──────────────────┐
-                 │ ML Preprocessing │
-                 │    Pipeline      │
-                 └────────┬─────────┘
-                          ↓
-                 ┌──────────────────┐
-                 │ Random Forest    │
-                 │    Regressor     │
-                 └────────┬─────────┘
-                          ↓
-                 ┌──────────────────┐
-                 │ Mental Health    │
-                 │     Score        │
-                 └──────────────────┘
 ```
 
 ---
