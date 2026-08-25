@@ -1,184 +1,140 @@
 # 🧠 MindScore AI — Mental Health Prediction
 
-> A machine learning web application that predicts a student's mental health score from social-media usage, academic habits, lifestyle factors, and stress level.
+A machine learning web application that predicts a student's **mental health score** based on social-media usage, academic habits, lifestyle factors, and stress level.
 
-**Live Project:** https://mental-health-prediction-score-oth9xmeky.vercel.app/
+## 🚀 Live Demo
 
-**Backend API:** https://mental-health-prediction-score-0r42.onrender.com
+**Live Project:**  
+https://mental-health-prediction-score-oth9xmeky.vercel.app/
+
+**Backend API:**  
+https://mental-health-prediction-score-0r42.onrender.com
 
 ---
 
-## 📌 Overview
+## 📌 About the Project
 
-**MindScore AI** is a full-stack machine learning application built to demonstrate the complete ML workflow — from exploratory data analysis and feature engineering to model training, serialization, API development, frontend integration, and cloud deployment.
+MindScore AI is a full-stack machine learning project that demonstrates the complete ML workflow:
 
-The project predicts the `Mental_Health_Score` as a continuous numerical value, making this a **regression problem**.
+- Data analysis and cleaning
+- Feature engineering
+- Data preprocessing
+- Model training
+- Model evaluation
+- Model serialization
+- FastAPI API development
+- Frontend integration
+- Cloud deployment
 
-The application collects information such as:
+The project predicts `Mental_Health_Score` as a continuous numerical value, so this is a **regression problem**.
+
+The model uses information such as:
 
 - Age and gender
 - Country
 - Academic level
-- Most-used social-media platform
-- Purpose of social-media usage
-- Average daily social-media usage
+- Most-used social media platform
+- Purpose of social media usage
+- Daily social media usage
 - Daily phone/social-media unlocks
 - Study hours
 - Physical activity
 - Sleep hours
 - Stress level
 
-The trained machine learning pipeline is served through a **FastAPI** backend. The frontend is built using **HTML, CSS, and JavaScript** and communicates with the API using HTTP requests.
-
 ---
 
 ## ✨ Features
 
-- 🧠 Machine-learning-based mental health score prediction
-- 📊 Regression model for continuous score prediction
-- 🧹 Data cleaning and feature engineering
-- 🔤 Ordinal and one-hot encoding for categorical variables
-- 🔄 Reusable scikit-learn preprocessing pipeline
-- 🌲 Random Forest regression
-- 🔎 Randomized hyperparameter search during experimentation
-- ⚡ FastAPI prediction API
+- 🧠 Mental health score prediction
+- 📊 Regression-based machine learning model
+- 🧹 Data cleaning and preprocessing
+- 🔤 Ordinal and one-hot encoding
+- ⚙️ Scikit-learn preprocessing pipeline
+- 🌲 Random Forest Regressor
+- 🔎 Hyperparameter tuning with RandomizedSearchCV
+- ⚡ FastAPI REST API
 - ✅ Pydantic input validation
-- 🌐 CORS support for frontend/API communication
-- 📡 Live API status indicator
-- 📈 Animated prediction score on the frontend
-- 📱 Responsive frontend design
-- ☁️ Frontend deployed on Vercel
-- ☁️ Backend deployed on Render
+- 🌐 CORS support
+- 📱 Responsive frontend
+- ☁️ Vercel frontend deployment
+- ☁️ Render backend deployment
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️ How It Works
 
 ```text
-                    ┌──────────────────────┐
-                    │      User / Browser  │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   HTML / CSS / JS    │
-                    │      Frontend        │
-                    │      (Vercel)        │
-                    └──────────┬───────────┘
-                               │
-                         POST /predict
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │      FastAPI         │
-                    │      Backend         │
-                    │      (Render)        │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │ Saved ML Pipeline     │
-                    │ Mental_Health_Model   │
-                    │       .pkl            │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │ Predicted Mental     │
-                    │ Health Score          │
-                    └──────────────────────┘
+User enters information
+        ↓
+HTML/CSS/JavaScript frontend
+        ↓
+POST /predict
+        ↓
+FastAPI validates the input
+        ↓
+Input converted to DataFrame
+        ↓
+Saved ML Pipeline preprocesses data
+        ↓
+Random Forest Regressor
+        ↓
+Predicted Mental Health Score
+        ↓
+FastAPI returns JSON
+        ↓
+Frontend displays the prediction
 ```
 
----
-
-## 📂 Project Structure
+The complete preprocessing pipeline and trained model are saved together in:
 
 ```text
-ml-fastapi-project/
-│
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   └── Mental_Health_Model.pkl
-│
-├── frontend/
-│   ├── index.html
-│   ├── scripts.js
-│   └── style.css
-│
-├── requirements.txt
-│
-└── README.md
+Mental_Health_Model.pkl
 ```
 
-> The frontend source provided for the project references `script.js`. If your actual repository file is named `scripts.js`, make sure the filename referenced by `index.html` matches the real file name.
+This allows the API to receive raw user data and apply the same preprocessing used during training before generating the prediction.
 
 ---
 
-# 🤖 Machine Learning
+## 🤖 Machine Learning
 
-## Dataset
+### Dataset
 
-The notebook uses:
+The project uses:
 
 ```text
 Student Social Media And Mental Health Impact.csv
 ```
 
-The dataset contains **5,000 students** and includes demographic, social-media, academic, lifestyle, and stress-related variables.
+The dataset contains approximately **5,000 student records**.
 
-The target variable is:
+Target variable:
 
 ```text
 Mental_Health_Score
 ```
 
-The notebook treats this as a **regression target** because the target is continuous.
+### Data Processing
 
----
+The project performs:
 
-## 🔍 Exploratory Data Analysis
-
-The notebook performs EDA including:
-
-- Dataset shape and columns
 - Missing-value inspection
-- Duplicate inspection
-- Data-type inspection
+- Duplicate checking
+- Data-type analysis
 - Descriptive statistics
-- Target distribution
-- Numeric correlation analysis
-- Stress level vs. mental health score
-- Social-media usage vs. mental health score
-- Sleep hours vs. mental health score
-- Most-used platform distribution
-- Numerical outlier analysis
+- Correlation analysis
+- Outlier analysis
+- Feature engineering
+- Categorical encoding
+- Feature scaling
 
----
+### Feature Engineering
 
-## 🧹 Data Cleaning
-
-The project removes duplicate rows and clips negative values from:
-
-```text
-Physical_Activity_Hours
-```
-
-The notebook also examines numerical feature skewness before preprocessing.
-
----
-
-## 🛠️ Feature Engineering
-
-### Country Grouping
-
-The dataset contains many country categories. To avoid creating a very high-dimensional one-hot encoded representation, the project keeps the **10 most frequent countries** and groups all remaining countries into:
+The country feature is grouped into the **10 most frequent countries**, while all remaining countries are grouped as:
 
 ```text
 Other
 ```
-
-This creates 11 country groups in total.
 
 The resulting feature is:
 
@@ -186,25 +142,19 @@ The resulting feature is:
 Grouped_country
 ```
 
----
+### Encoding
 
-## 🔤 Encoding Strategy
+**Ordinal Encoding**
 
-Different categorical variables are handled according to their meaning.
-
-### Ordinal Encoding
-
-`Stress_Level` has a natural order:
+`Stress_Level` is encoded according to:
 
 ```text
-Low < Medium < High < Very High
+Low → Medium → High → Very High
 ```
 
-Therefore it is encoded using an explicit ordinal order.
+**One-Hot Encoding**
 
-### One-Hot Encoding
-
-The following nominal variables are one-hot encoded:
+Used for:
 
 ```text
 Gender
@@ -214,73 +164,31 @@ Purpose_Of_Use
 Grouped_country
 ```
 
-This avoids introducing artificial numerical relationships between unrelated categories.
+### Preprocessing Pipeline
 
----
+`ColumnTransformer` is used to apply different preprocessing steps to different features.
 
-## ⚙️ Preprocessing Pipeline
-
-The project uses `ColumnTransformer` with separate preprocessing branches.
-
-### Skewed Feature
+For `Study_Hours`:
 
 ```text
-Study_Hours
+Log Transformation → StandardScaler
 ```
 
-Processing:
-
-```text
-Log transformation → StandardScaler
-```
-
-### Other Numerical Features
-
-```text
-Age
-Avg_Daily_Usage_Hours
-Daily_Unlocks
-Physical_Activity_Hours
-Sleep_Hours_Per_Night
-```
-
-Processing:
+Other numerical features use:
 
 ```text
 StandardScaler
 ```
 
-### Stress Level
-
-```text
-OrdinalEncoder
-```
-
-with:
-
-```text
-Low → Medium → High → Very High
-```
-
-### Nominal Categorical Features
-
-```text
-OneHotEncoder(handle_unknown="ignore")
-```
-
-The preprocessing is stored together with the model inside a single scikit-learn pipeline.
+The complete preprocessing and model are stored in one scikit-learn pipeline.
 
 ---
 
-# 🌲 Model Development
+## 📊 Model Performance
 
-Two main regression approaches were compared.
+Two regression models were compared.
 
-## 1. Linear Regression
-
-Linear Regression was used as the baseline model.
-
-Test results:
+### Linear Regression
 
 | Metric | Score |
 |---|---:|
@@ -289,13 +197,9 @@ Test results:
 | MAE | 0.5362 |
 | RMSE | 0.6760 |
 
----
+### Random Forest Regressor
 
-## 2. Random Forest Regressor
-
-A Random Forest Regressor was then trained using the same preprocessing pipeline.
-
-Default Random Forest results:
+The default Random Forest performed better than the Linear Regression baseline.
 
 | Metric | Score |
 |---|---:|
@@ -304,15 +208,11 @@ Default Random Forest results:
 | MAE | 0.3472 |
 | RMSE | 0.4637 |
 
-The default Random Forest performed better than the Linear Regression baseline on the test set.
+### Tuned Random Forest
 
----
+`RandomizedSearchCV` was used for hyperparameter tuning.
 
-## 🔎 Hyperparameter Tuning
-
-`RandomizedSearchCV` was used to search for better Random Forest parameters.
-
-The selected parameters were:
+Selected parameters:
 
 ```text
 n_estimators = 200
@@ -321,90 +221,42 @@ min_samples_split = 5
 min_samples_leaf = 2
 ```
 
-The tuned model achieved:
+Results:
 
 | Metric | Score |
 |---|---:|
-| Testing R² | 0.8650 |
 | Training R² | 0.9547 |
+| Testing R² | 0.8650 |
 | MAE | 0.3689 |
 | RMSE | 0.4869 |
 
-Although the tuned model reduced the training score, the notebook's final comparison shows that the **default Random Forest achieved the higher test R²**.
-
-Therefore, the saved model in the project is the default `RandomForestRegressor` pipeline:
-
-```python
-joblib.dump(rf_pipeline, "Mental_Health_Model.pkl")
-```
+The **default Random Forest achieved the highest testing R² (0.8776)**, so the default Random Forest pipeline was selected as the final model.
 
 ---
 
-# 💾 Model Serialization
+## 🌐 API
 
-The complete preprocessing + model pipeline is saved as:
+The backend is built using **FastAPI**.
 
-```text
-Mental_Health_Model.pkl
+### Health Check
+
+```http
+GET /
 ```
 
-Saving the complete pipeline means the API can receive raw input data and call:
+### Prediction
 
-```python
-model.predict(input_row)
+```http
+POST /predict
 ```
 
-without manually recreating the training-time preprocessing steps.
-
----
-
-# 🚀 FastAPI Backend
-
-The backend is implemented using **FastAPI**.
-
-The model is loaded when the application starts:
-
-```python
-model = joblib.load(BASE_DIR / "Mental_Health_Model.pkl")
-```
-
-The backend also uses:
-
-- Pydantic
-- pandas
-- joblib
-- scikit-learn
-- CORS middleware
-
----
-
-## API Endpoints
-
-### `GET /`
-
-Used as a simple health check.
-
-Example response:
-
-```json
-{
-  "Welcome to My web"
-}
-```
-
-### `POST /predict`
-
-Receives student information and returns the predicted mental health score.
-
-Endpoint:
+Live API:
 
 ```text
 https://mental-health-prediction-score-0r42.onrender.com/predict
 ```
 
----
-
-## 📥 Request Example
+### Example Request
 
 ```json
 {
@@ -423,7 +275,7 @@ https://mental-health-prediction-score-0r42.onrender.com/predict
 }
 ```
 
-## 📤 Response Example
+### Example Response
 
 ```json
 {
@@ -431,152 +283,103 @@ https://mental-health-prediction-score-0r42.onrender.com/predict
 }
 ```
 
-The exact prediction depends on the input values and the trained model.
+---
+
+## 📁 Project Structure
+
+```text
+ml-fastapi-project/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   └── Mental_Health_Model.pkl
+│
+├── frontend/
+│   ├── index.html
+│   ├── scripts.js
+│   └── style.css
+│
+├── requirements.txt
+└── README.md
+```
+
+> Make sure the JavaScript filename referenced by `index.html` matches the actual filename in the `frontend` folder.
 
 ---
 
-# 🛡️ Input Validation
+## 🛠️ Technologies Used
 
-FastAPI/Pydantic validates the incoming request.
-
-Examples of validation rules include:
-
-```text
-Age: 10–100
-Avg_Daily_Usage_Hours: 6–24
-Study_Hours: 0–24
-Physical_Activity_Hours: 0–2
-Sleep_Hours_Per_Night: 0–24
-Daily_Unlocks: >= 0
-```
-
-Categorical fields are restricted to the supported values defined by the API schema.
-
----
-
-# 🌐 Frontend
-
-The frontend is built using:
-
-- HTML5
-- CSS3
-- Vanilla JavaScript
-
-The UI is branded as:
-
-```text
-MindScore AI
-Mental Health Prediction
-```
-
-The frontend contains sections for:
-
-1. Personal Information
-2. Social Media Usage
-3. Lifestyle & Wellbeing
-
-The result panel displays the predicted score and a frontend interpretation.
-
----
-
-## 🔗 Frontend → Backend Communication
-
-The JavaScript frontend stores the deployed API URL:
-
-```javascript
-const API_URL =
-  "https://mental-health-prediction-score-0r42.onrender.com";
-```
-
-When the form is submitted, JavaScript sends a `POST` request to:
-
-```text
-/predict
-```
-
-with:
-
-```text
-Content-Type: application/json
-```
-
-The returned prediction is then displayed in the result panel.
-
----
-
-## 📊 Score Interpretation
-
-The numerical prediction is interpreted on the frontend using these ranges:
-
-| Score | Frontend Label |
+| Category | Technologies |
 |---|---|
-| `< 30` | Lower Score Range |
-| `30–59.99` | Moderate Score Range |
-| `60–79.99` | Good Score Range |
-| `>= 80` | Higher Score Range |
-
-These labels are **frontend interpretations** and are not additional model outputs.
+| Programming | Python, JavaScript |
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | FastAPI |
+| Data Processing | Pandas, NumPy |
+| Machine Learning | Scikit-learn |
+| Model | Random Forest Regressor |
+| Model Saving | Joblib |
+| Validation | Pydantic |
+| API | REST / JSON |
+| Frontend Deployment | Vercel |
+| Backend Deployment | Render |
 
 ---
 
-# ☁️ Deployment
+## ☁️ Deployment
 
-## Frontend — Vercel
+### Frontend
 
-The static frontend can be deployed through Vercel.
-
-**Live Project:**
+The frontend is deployed using **Vercel**.
 
 ```text
 https://mental-health-prediction-score-oth9xmeky.vercel.app/
 ```
 
-Replace the placeholder above with your actual Vercel URL.
+### Backend
 
-## Backend — Render
-
-The FastAPI backend is deployed on Render.
-
-**Backend API:**
+The FastAPI backend is deployed using **Render**.
 
 ```text
 https://mental-health-prediction-score-0r42.onrender.com
 ```
 
+The frontend communicates with the backend through the `/predict` API endpoint.
+
 ---
 
-# 🧪 Running Locally
+## 💻 Run Locally
 
-## 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone Ashish094562/Mental_Health_score
 cd ml-fastapi-project
 ```
 
-## 2. Create a virtual environment
+### 2. Create a Virtual Environment
 
-Windows:
+**Windows:**
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-Linux/macOS:
+**Linux/macOS:**
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-## 3. Install dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 4. Start FastAPI
+### 4. Start the FastAPI Backend
 
 From the project root:
 
@@ -584,19 +387,19 @@ From the project root:
 uvicorn app.main:app --reload
 ```
 
-The API will normally be available at:
+Backend:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-FastAPI's interactive documentation will be available at:
+Swagger API documentation:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-## 5. Run the frontend
+### 5. Run the Frontend
 
 Open:
 
@@ -604,9 +407,9 @@ Open:
 frontend/index.html
 ```
 
-in a browser, or serve the frontend through a local static server.
+in your browser or use a local static server.
 
-Make sure the JavaScript API URL points to your local backend if you are testing locally:
+For local testing, make sure the frontend API URL points to:
 
 ```javascript
 const API_URL = "http://127.0.0.1:8000";
@@ -614,67 +417,58 @@ const API_URL = "http://127.0.0.1:8000";
 
 ---
 
-# 🔄 Application Workflow
+## 🔄 Application Architecture
 
 ```text
-User enters information
-        ↓
-Frontend validates form
-        ↓
-JavaScript creates JSON request
-        ↓
-POST /predict
-        ↓
-FastAPI validates request
-        ↓
-Input converted to DataFrame
-        ↓
-Saved ML pipeline preprocesses data
-        ↓
-Random Forest generates prediction
-        ↓
-FastAPI returns JSON response
-        ↓
-Frontend displays predicted score
-        ↓
-Score is animated and interpreted
+                 ┌──────────────────┐
+                 │      User        │
+                 └────────┬─────────┘
+                          ↓
+                 ┌──────────────────┐
+                 │ HTML / CSS / JS  │
+                 │    Frontend      │
+                 └────────┬─────────┘
+                          ↓
+                    POST /predict
+                          ↓
+                 ┌──────────────────┐
+                 │     FastAPI      │
+                 │     Backend      │
+                 └────────┬─────────┘
+                          ↓
+                 ┌──────────────────┐
+                 │ ML Preprocessing │
+                 │    Pipeline      │
+                 └────────┬─────────┘
+                          ↓
+                 ┌──────────────────┐
+                 │ Random Forest    │
+                 │    Regressor     │
+                 └────────┬─────────┘
+                          ↓
+                 ┌──────────────────┐
+                 │ Mental Health    │
+                 │     Score        │
+                 └──────────────────┘
 ```
 
 ---
 
-# 🧰 Tech Stack
+## 📚 What I Learned
 
-| Category | Technology |
-|---|---|
-| Programming | Python, JavaScript |
-| Frontend | HTML5, CSS3, JavaScript |
-| Backend | FastAPI |
-| Data Processing | pandas, NumPy |
-| Machine Learning | scikit-learn |
-| Model | Random Forest Regressor |
-| Model Saving | Joblib |
-| Validation | Pydantic |
-| API Communication | REST / JSON |
-| Frontend Deployment | Vercel |
-| Backend Deployment | Render |
-
----
-# 🎯 Learning Outcomes
-
-This project demonstrates practical experience with:
+This project helped me practice:
 
 - Exploratory Data Analysis
 - Data cleaning
 - Feature engineering
-- Handling high-cardinality categorical features
+- Handling categorical features
 - Ordinal encoding
 - One-hot encoding
 - Feature scaling
 - Log transformation
-- `ColumnTransformer`
-- scikit-learn `Pipeline`
+- ColumnTransformer
+- Scikit-learn Pipeline
 - Regression
-- Linear Regression
 - Random Forest
 - Hyperparameter tuning
 - Cross-validation
@@ -689,7 +483,7 @@ This project demonstrates practical experience with:
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Ashish Singh**
 
@@ -697,6 +491,4 @@ Machine Learning / Software Development Project
 
 ---
 
-## ⭐ If you found this project useful
-
-Feel free to star the repository and explore the implementation.
+⭐ If you found this project useful, consider giving the repository a star.
